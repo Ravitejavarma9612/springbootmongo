@@ -5,14 +5,17 @@ import com.example.demomongo.noobcoderravivarma.Exceptions.InputIncorrectExcepti
 import com.example.demomongo.noobcoderravivarma.Exceptions.UserNotFoundException;
 import com.example.demomongo.noobcoderravivarma.Services.PersonService;
 import com.fasterxml.classmate.ResolvedTypeWithMembers;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import org.springframework.data.mongodb.core.query.*;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -57,5 +60,19 @@ public class Personcontroller {
             throw new InputIncorrectException("Min age should not be greater than Max age");
         }
         return personService.findPersonBetweenAge(min,max);
+    }
+
+    @GetMapping("/search")
+    public Page<Person> searchPerson(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer maxAge,
+            @RequestParam(required = false) Integer minAge,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size){
+
+        Pageable pageable = PageRequest.of(page,size);
+
+        return personService.search(name,maxAge,minAge,pageable);
+
     }
 }
