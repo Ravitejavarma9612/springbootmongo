@@ -1,6 +1,7 @@
 package com.example.demomongo.noobcoderravivarma.Controllers;
 
 import com.example.demomongo.noobcoderravivarma.Collections.Person;
+import com.example.demomongo.noobcoderravivarma.Exceptions.InputIncorrectException;
 import com.example.demomongo.noobcoderravivarma.Exceptions.UserNotFoundException;
 import com.example.demomongo.noobcoderravivarma.Services.PersonService;
 import com.fasterxml.classmate.ResolvedTypeWithMembers;
@@ -51,7 +52,10 @@ public class Personcontroller {
     }
 
     @GetMapping("/fetchapi")
-    public List<Person> fetchPersonBetweenAge(@RequestParam Integer min ,@RequestParam Integer max){
+    public List<Person> fetchPersonBetweenAge(@RequestParam Integer min ,@RequestParam Integer max) throws InputIncorrectException {
+        if(min > max){
+            throw new InputIncorrectException("Min age should not be greater than Max age");
+        }
         return personService.findPersonBetweenAge(min,max);
     }
 }
