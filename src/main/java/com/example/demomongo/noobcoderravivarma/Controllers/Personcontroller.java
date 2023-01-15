@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -33,9 +35,17 @@ public class Personcontroller {
         Person p = getoneperson(id).orElseThrow(()-> new UserNotFoundException("user not found"));
         p.setName(person.getName());
         p.setAddress(person.getAddress());
+        p.setAge(person.getAge());
         personService.saveoptional(p);
-
-
      return ResponseEntity.ok(p);
+    }
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Boolean> deleteperson(@PathVariable long id) throws UserNotFoundException {
+        Person p = getoneperson(id).orElseThrow(()-> new UserNotFoundException("user not found"));
+        personService.deleteperson(p);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+
     }
 }

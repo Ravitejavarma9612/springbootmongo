@@ -16,4 +16,6 @@ public interface PersonServiceinterface {
 
 
     void saveoptional(Person p);
+
+    void deleteperson(Person p);
 }

@@ -32,5 +32,10 @@ public class PersonService implements PersonServiceinterface {
         personrepo.save(p);
     }
 
+    @Override
+    public void deleteperson(Person p) {
+        personrepo.deleteById(p.getId());
+    }
+
 
 }
