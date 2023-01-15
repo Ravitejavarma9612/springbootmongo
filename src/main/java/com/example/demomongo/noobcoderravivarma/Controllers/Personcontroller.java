@@ -1,8 +1,10 @@
 package com.example.demomongo.noobcoderravivarma.Controllers;
 
 import com.example.demomongo.noobcoderravivarma.Collections.Person;
+import com.example.demomongo.noobcoderravivarma.Exceptions.UserNotFoundException;
 import com.example.demomongo.noobcoderravivarma.Services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,5 +27,15 @@ public class Personcontroller {
     @PostMapping("/create")
     public Long createrecord(@RequestBody Person person){
         return personService.save(person);
+    }
+    @PutMapping("update/{id}")
+    public ResponseEntity<Person> updateDetails(@RequestBody Person person, @PathVariable long id) throws UserNotFoundException {
+        Person p = getoneperson(id).orElseThrow(()-> new UserNotFoundException("user not found"));
+        p.setName(person.getName());
+        p.setAddress(person.getAddress());
+        personService.saveoptional(p);
+
+
+     return ResponseEntity.ok(p);
     }
 }

@@ -23,9 +23,14 @@ public class PersonService implements PersonServiceinterface {
         return personrepo.findById(id);
     }
 
-    @Override
     public Long save(Person person) {
         return personrepo.save(person).getId();
     }
+
+    @Override
+    public void saveoptional(Person p) {
+        personrepo.save(p);
+    }
+
 
 }

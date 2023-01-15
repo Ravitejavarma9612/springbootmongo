@@ -12,4 +12,8 @@ public interface PersonServiceinterface {
     Optional<Person> findById(Long id);
 
     Long save(Person person);
+
+
+
+    void saveoptional(Person p);
 }
