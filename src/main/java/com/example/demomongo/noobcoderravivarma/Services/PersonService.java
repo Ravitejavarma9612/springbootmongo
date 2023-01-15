@@ -37,5 +37,10 @@ public class PersonService implements PersonServiceinterface {
         personrepo.deleteById(p.getId());
     }
 
+    @Override
+    public List<Person> findPersonBetweenAge(Integer min, Integer max) {
+        return personrepo.findPersonBetweenAge(min,max);
+    }
+
 
 }

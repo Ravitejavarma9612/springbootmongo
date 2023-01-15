@@ -18,4 +18,6 @@ public interface PersonServiceinterface {
     void saveoptional(Person p);
 
     void deleteperson(Person p);
+
+    List<Person> findPersonBetweenAge(Integer min, Integer max);
 }
